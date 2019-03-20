@@ -2,15 +2,20 @@
  <div class="header">
      <div class="headerLeft"><i class="iconfont">&#xe624;</i></div>
      <div class="headerCenter"><i class="iconfont search-icon">&#xe632;</i>输入城市/景点/游玩主题</div>
-     <div class="headerRight">{{city}}<i class="iconfont drop-icon">&#xe64a;</i></div>
+     <div class="headerRight">
+       <router-link to="/city">{{currentCity}}</router-link>
+       <i class="iconfont drop-icon">&#xe64a;</i>
+     </div>
  </div>
 </template>
 
 <script>
 export default {
   name: 'HomeHeader',
-  props: {
-    city: String
+  computed: {
+    currentCity () {
+      return this.$store.state.currentCity
+    }
   }
 }
 </script>
@@ -41,6 +46,8 @@ export default {
         width: 1.24rem
         text-align: center
         .drop-icon
-            font-size: 0.2rem
-            padding-left: 0.1rem
+            font-size: 0.26rem
+        a
+            color: #ffffff
+            font-size .32rem
 </style>
