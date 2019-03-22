@@ -2,8 +2,12 @@
   <div class='alphabet'>
       <div class="alpha-city"
         @click="handleclick(item)"
+        @touchstart.prevent='handletouchstart'
+        @touchmove="handletouchmove"
+        @touchend="handletouchend"
         v-for="item in letter"
-        :key="item">
+        :key="item"
+        :ref="item">
         {{item}}
       </div>
   </div>
@@ -14,6 +18,12 @@ export default {
   props: {
     cities: Object
   },
+  data () {
+    return {
+      touchStatus: false,
+      timer: null
+    }
+  },
   computed: {
     letter () {
       const letter = []
@@ -21,11 +31,32 @@ export default {
         letter.push(item)
       }
       return letter
+    },
+    startY () {
+      return this.$refs['A'][0].offsetTop
     }
   },
   methods: {
     handleclick (data) {
       this.$emit('change', data)
+    },
+    handletouchstart () {
+      this.touchStatus = true
+    },
+    handletouchmove (e) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        const touchY = e.touches[0].clientY - 79 - this.startY
+        const index = Math.floor(touchY / 20)
+        if (index >= 0 && index <= this.letter.length) {
+          this.$emit('change', this.letter[index])
+        }
+      }, 16)
+    },
+    handletouchend () {
+      this.touchStatus = false
     }
   }
 }
