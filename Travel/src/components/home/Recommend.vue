@@ -6,7 +6,7 @@
     </div>
     <ul class="rc-group-list">
       <li v-for="item in list" :key="item.id">
-        <a :href="item.url">
+        <router-link  :to="/detail/+item.id">
            <div class="imgCon">
              <img src="http://img1.qunarzz.com/sight/p0/1502/f7/f7f32b8108836ce1.water.jpg_200x200_41f56cff.jpg" alt="">
            </div>
@@ -15,7 +15,7 @@
              <p class="imgInfo-address">{{item.address}}</p>
              <p class="imgInfo-price">${{item.price}}</p>
            </div>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>
